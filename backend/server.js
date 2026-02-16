@@ -22,7 +22,7 @@ const mpClient = new MercadoPagoConfig({
 const app = express();
 //const PORT = process.env.PORT || 3000;
 
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 
 // Middleware
 app.use(cors());
@@ -321,6 +321,12 @@ app.post("/api/webhook-mercadopago", async (req, res) => {
 });
 
 //------------------------------------------------------
+//app.listen(PORT, () => {
+  //console.log(`🚀 Servidor corriendo en http://localhost:${PORT}`);
+//});
+
+
+
 app.listen(PORT, () => {
-  console.log(`🚀 Servidor corriendo en http://localhost:${PORT}`);
+  console.log(`Servidor corriendo en puerto ${PORT}`);
 });
