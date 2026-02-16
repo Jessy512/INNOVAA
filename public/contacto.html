@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contacto - Innova División</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+  <img src="img/logo.png" alt="innova logo" />
+
+  <nav>
+    <a href="index.html">Inicio</a>
+
+    <div class="dropdown">
+      <a href="#" id="productos-link">Productos ▼</a>
+      <div class="dropdown-content" id="categoria-lista"></div>
+    </div>
+
+    <a href="nosotros.html">Quienes Somos</a>
+    <a href="envios.html">Envíos</a>
+    <a href="contacto.html" class="active">Contacto</a>
+    <a href="carrito.html">Carrito 🛒</a>
+    <a href="faq.html">FAQ</a>
+    
+  </nav>
+</header>
+
+<!-- 🔹 Banner -->
+  <div class="banner banner-contacto">
+    <img src="img/contacto.png" alt="Banner INNOVA">
+  </div>
+
+<main class="contacto-container">
+
+  <h1 class="titulo-contacto">Contáctanos</h1>
+
+  <p class="descripcion-contacto">
+    Estamos aquí para ayudarte. Si necesitas cotizaciones, asesoría o información sobre nuestros productos,
+    envíanos un mensaje y nuestro equipo te atenderá lo más pronto posible.
+  </p>
+
+  <div class="contact-grid">
+
+    <!-- 🔹 DATOS DE CONTACTO -->
+    <section class="info-contacto card">
+      <h2>Datos de contacto</h2>
+
+      <p><strong>Teléfono(s):</strong> <a href="tel:+52 5610138775">+52 5610138775</a></p>
+      <p><strong>Ubicación:</strong> Parque Logistico Odonell, Manzana 004, Axotlan, 54716 Cuautitlán Izcalli, Méx.</p>
+      <p><strong>Correo electrónico:</strong> <a href="mailto:innova@gmail.com">cdeleonorea@gmail.com</a></p>
+      <p><strong>Horario de atención:</strong> 8:30 - 18:00 hrs</p>
+    </section>
+
+    <!-- 🔹 FORMULARIO -->
+    <section class="formulario-contacto card">
+      <h2>Formulario de contacto</h2>
+
+      <form id="form-contacto" autocomplete="off">
+        <label for="nombre">Nombre completo *</label>
+        <input id="nombre" type="text" name="nombre" required>
+
+        <label for="correo">Correo electrónico *</label>
+        <input id="correo" type="email" name="correo" required>
+
+        <label for="telefono">Número de celular *</label>
+        <input id="telefono" type="tel" name="telefono" required>
+
+        <label for="empresa">Empresa (opcional)</label>
+        <input id="empresa" type="text" name="empresa">
+
+        <label for="mensaje">Mensaje *</label>
+        <textarea id="mensaje" name="mensaje" required></textarea>
+
+        <div class="form-actions">
+          <button type="submit" class="btn-enviar">Enviar</button>
+        </div>
+
+        <p id="mensaje-exito" class="mensaje-exito" style="display:none;">
+          ✔️ Tu mensaje ha sido enviado correctamente. Pronto te contactaremos.
+        </p>
+
+        <p id="mensaje-error" class="mensaje-error" style="display:none; color: #b00020;"></p>
+      </form>
+    </section>
+
+  </div>
+
+  <!-- CTA Final -->
+  <p class="cta-contacto">
+    ¿Tienes más dudas sobre los productos de <strong>INNOVA División Química</strong>?
+    Envíanos un correo de forma personal para resolver tus dudas.
+  </p>
+
+</main>
+
+<script src="contacto.js"></script>
+
+<!-- ================= FOOTER ================= -->
+  <footer class="footer">
+    <div class="footer-container">
+
+      <!-- Columna 1 -->
+      <div class="footer-col">
+        <h3>INNOVA División Química</h3>
+        <p><strong>Productos químicos y de consumo con calidad garantizada</strong></p>
+
+        <p><strong>Ubicación:</strong><br>
+          Parque Logistico Odonell<br>
+          Manzana 004, Axotlan, 54716 Cuautitlán Izcalli, Méx.
+        </p>
+
+        <p><strong>Ventas:</strong><br>
+          56-10-13-87-75<br>
+          55-1233-5136, 55-3704-6332
+        </p>
+
+        <p><strong>Whatsapp:</strong> 56-10-13-87-75</p>
+      </div>
+
+      <!-- Columna 2 -->
+      <div class="footer-col">
+        <h3>MENÚ PRINCIPAL</h3>
+        <a href="index.html">Inicio</a>
+        <a href="nosotros.html">Nosotros</a>
+        <a href="productos.html">Catálogo</a>
+        <a href="envios.html">Envíos</a>
+        <a href="contacto.html">Contacto</a>
+        <a href="faq.html">Preguntas Frecuentes</a>
+      </div>
+
+      <!-- Columna 3 -->
+      <div class="footer-col">
+        <h3>MENÚ INFERIOR</h3>
+        <a href="avisopriv.html">Aviso de Privacidad</a>
+        <a href="contacto.html">Contacto</a>
+        <a href="terminosservicio.html">Términos del Servicio</a>
+        <a href="politicapriv.html">Política de Privacidad</a>
+        <a href="politicaenvio.html">Políticas de Envío</a>
+        <a href="politicareembolso.html">Política de Reembolso</a>
+      </div>
+
+      <!-- Columna 4 -->
+      <div class="footer-col">
+        <h3>CONTÁCTANOS</h3>
+        <p>
+          Si necesitas cotizaciones, asesoría o información sobre nuestros productos, envíanos un mensaje y nuestro equipo te atenderá lo más pronto posible.
+        </p>
+
+        <input type="email" placeholder="Tu email" class="footer-input">
+        <button class="footer-btn">Contáctanos</button>
+      </div>
+
+    </div>
+  </footer>
+
+  <!-- ================= WHATSAPP FLOAT ================= -->
+<div class="whatsapp-wrapper">
+  <span class="whatsapp-text">
+    ¿Te puedo ayudar con una cotización?
+  </span>
+
+  <a href="https://wa.me/525610138775"
+     class="whatsapp-float"
+     target="_blank"
+     title="¿Te puedo ayudar con una cotización?">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg"
+         alt="WhatsApp">
+  </a>
+</div>
+
+</body>
+</html>

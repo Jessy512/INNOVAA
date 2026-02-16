@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Carrito - INNOVA División Química</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<header>
+    <img src="img/logo.png" alt="innova logo">
+    <nav>
+      <a href="index.html">Inicio</a>
+
+      <div class="dropdown">
+        <a href="#" id="productos-link">Productos ▼</a>
+        <div class="dropdown-content" id="categoria-lista"></div>
+      </div>
+
+      <a href="nosotros.html">Quienes Somos</a>
+      <a href="envios.html">Envíos</a>
+      <a href="contacto.html">Contacto</a>
+      <a href="carrito.html" class="active">Carrito 🛒</a>
+      <a href="faq.html">FAQ</a>
+      
+    </nav>
+</header>
+
+<main class="carrito-page">
+  <h1>Tu carrito</h1>
+
+  <!-- 🔹 CARRITO VACÍO -->
+  <div id="carrito-vacio" class="carrito-vacio" style="display:none;">
+      <img src="img/carrito.png" class="img-carrito-vacio" alt="Carrito vacío">
+      <p>Tu carrito está vacío. Te invitamos a conocer nuestros productos.</p>
+      <a href="productos.html" class="btn-negro">Ver productos</a>
+  </div>
+
+  <!-- 🔹 CARRITO LLENO -->
+  <div id="carrito-contenedor" class="carrito-contenedor" style="display:none;">
+    <div id="lista-items" class="lista-items"></div>
+
+    <aside class="resumen-compra">
+      <h2>Resumen</h2>
+      <p id="subtotal-line">Subtotal: $0.00</p>
+      <!--<p id="envio-line">Envío: $0.00</p>-->
+      <!--<p id="total-line" class="total-line">Total: $0.00</p>-->
+
+      <div class="resumen-acciones">
+        <a id="seguir-comprando" href="productos.html" class="btn btn-negro">Seguir comprando</a>
+        <button id="vaciar-carrito" class="btn btn-negro">Vaciar carrito</button>
+        <button id="pagar-ahora" href="productos.html" class="btn btn-negro">Pagar ahora</button>
+      </div>
+
+      <div id="mensaje-error" class="mensaje-error" style="display:none;color:#b00020;margin-top:10px;"></div>
+    </aside>
+  </div>
+
+  <!-- 🔹 Modal de pago -->
+  <div id="modal-pago" class="modal-pago" style="display:none;">
+    <div class="modal-contenido">
+      <h3>Confirmar compra</h3>
+
+      <label>Nombre (opcional)</label>
+      <input id="cliente-nombre" type="text" placeholder="Nombre">
+
+      <label>Correo (opcional)</label>
+      <input id="cliente-correo" type="email" placeholder="correo@dominio.com">
+
+      <label>Método de pago</label>
+      <select id="metodo-pago">
+        <option value="Transferencia">Transferencia</option>
+        <option value="Efectivo">Efectivo</option>
+        <option value="Pago en tienda">Pago en tienda</option>
+      </select>
+
+      <label>¿Requiere envío?</label>
+      <select id="solicita-envio">
+        <option value="no">No, recogeré en empresa</option>
+        <option value="si">Sí, enviar a dirección</option>
+      </select>
+
+      <div id="datos-envio" style="display:none;">
+        <label>Dirección</label>
+        <input id="envio-direccion" type="text" placeholder="Calle y número">
+        <label>Ciudad</label>
+        <input id="envio-ciudad" type="text" placeholder="Ciudad">
+        <label>CP</label>
+        <input id="envio-cp" type="text" placeholder="Código postal">
+        <label>Estado</label>
+        <input id="envio-estado" type="text" placeholder="Estado">
+      </div>
+
+      <div class="modal-acciones">
+        <button id="cancelar-pago" class="btn btn-negro">Cancelar</button>
+        <button id="confirmar-pago" class="btn btn-negro">Confirmar y pagar</button>
+      </div>
+
+      <p id="modal-msg" style="color:#b00020; display:none;"></p>
+    </div>
+  </div>
+</main>
+
+<!-- 🔹 Mensaje flotante -->
+<div id="mensaje-carrito" class="mensaje-carrito"></div>
+
+<script src="carrito.js"></script>
+
+<!-- ================= FOOTER ================= -->
+  <footer class="footer">
+    <div class="footer-container">
+
+      <!-- Columna 1 -->
+      <div class="footer-col">
+        <h3>INNOVA División Química</h3>
+        <p><strong>Productos químicos y de consumo con calidad garantizada</strong></p>
+
+        <p><strong>Ubicación:</strong><br>
+          Parque Logistico Odonell<br>
+          Manzana 004, Axotlan, 54716 Cuautitlán Izcalli, Méx.
+        </p>
+
+        <p><strong>Ventas:</strong><br>
+          56-10-13-87-75<br>
+          55-1233-5136, 55-3704-6332
+        </p>
+
+        <p><strong>Whatsapp:</strong> 56-10-13-87-75</p>
+      </div>
+
+      <!-- Columna 2 -->
+      <div class="footer-col">
+        <h3>MENÚ PRINCIPAL</h3>
+        <a href="index.html">Inicio</a>
+        <a href="nosotros.html">Nosotros</a>
+        <a href="productos.html">Catálogo</a>
+        <a href="envios.html">Envíos</a>
+        <a href="contacto.html">Contacto</a>
+        <a href="faq.html">Preguntas Frecuentes</a>
+      </div>
+
+      <!-- Columna 3 -->
+      <div class="footer-col">
+        <h3>MENÚ INFERIOR</h3>
+        <a href="avisopriv.html">Aviso de Privacidad</a>
+        <a href="contacto.html">Contacto</a>
+        <a href="terminosservicio.html">Términos del Servicio</a>
+        <a href="politicapriv.html">Política de Privacidad</a>
+        <a href="politicaenvio.html">Políticas de Envío</a>
+        <a href="politicareembolso.html">Política de Reembolso</a>
+      </div>
+
+      <!-- Columna 4 -->
+      <div class="footer-col">
+        <h3>CONTÁCTANOS</h3>
+        <p>
+          Si necesitas cotizaciones, asesoría o información sobre nuestros productos, envíanos un mensaje y nuestro equipo te atenderá lo más pronto posible.
+        </p>
+
+        <input type="email" placeholder="Tu email" class="footer-input">
+        <button class="footer-btn">Contáctanos</button>
+      </div>
+
+    </div>
+  </footer>
+
+  <!-- ================= WHATSAPP FLOAT ================= -->
+<div class="whatsapp-wrapper">
+  <span class="whatsapp-text">
+    ¿Te puedo ayudar con una cotización?
+  </span>
+
+  <a href="https://wa.me/525610138775"
+     class="whatsapp-float"
+     target="_blank"
+     title="¿Te puedo ayudar con una cotización?">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg"
+         alt="WhatsApp">
+  </a>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>INNOVA</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header>
+    <img src="img/logo.png" alt="innova logo">
+    <nav>
+      <a href="index.html" class="active">Inicio</a>
+
+      <!-- 🔹 Menú desplegable de categorías -->
+      <div class="dropdown">
+        <a href="#" id="productos-link">Productos ▼</a>
+        <div class="dropdown-content" id="categoria-lista"></div>
+      </div>
+
+      <a href="nosotros.html">Quienes Somos</a>
+      <a href="envios.html">Envíos</a>
+      <a href="contacto.html">Contacto</a>
+      <a href="carrito.html">Carrito 🛒</a>
+      <a href="faq.html">FAQ</a>
+      
+    </nav>
+  </header>
+
+  <!-- 🔹 Banner -->
+  <div class="banner">
+    <img src="img/fondo.png" alt="Banner INNOVA">
+    <a href="productos.html" class="btn-ver-productos">Ver Productos</a>
+  </div>
+
+  <!-- ⭐ NUESTROS PRODUCTOS -->
+  <section class="nuestros-productos">
+    <h2>Nuestros Productos</h2>
+
+    <p>
+      <br><br>
+      <b>Los precios están sujetos a cambio sin previo aviso.</b>
+      <br><br>
+      <b>Aviso:</b> nuestro horario será de <b>7:00 a.m. a 5:00 p.m.</b> hasta nuevo aviso.
+      Agradecemos su preferencia.
+    </p>
+
+    <!-- 🔹 Imágenes de categorías -->
+    <div class="categorias-grid" id="categorias-imagenes"></div>
+
+  </section>
+
+  <!-- 🔍 BUSCADOR -->
+  <section class="buscador">
+    <h2>Busca tu producto</h2>
+
+    <div class="buscador-contenedor">
+      <input type="text" id="busqueda" placeholder="Buscar productos…">
+      <div id="resultados-busqueda" class="resultados-busqueda"></div>
+    </div>
+  </section>
+
+
+  <!-- 🏭 INNOVA DIVISIÓN QUÍMICA -->
+  <section class="sobre-empresa">
+    <div class="texto">
+      <h2>INNOVA DIVISIÓN QUÍMICA</h2>
+      <p>
+        Empresa mexicana con más de 20 años de experiencia, enfocada en la fabricación y comercialización de productos
+        químicos para limpieza industrial, comercial y del hogar.
+        <br><br>
+        Entra a nuestra tienda virtual y descubre nuestra amplia gama de productos como jarciería, papel higiénico,
+        despachadores y más.
+      </p>
+      <a href="contacto.html" class="btn-contacto">Contáctanos</a>
+    </div>
+
+    <div class="imagen">
+      <img src="img/logo.png" alt="Innova empresa">
+    </div>
+  </section>
+
+ <!-- 🧼 ÁREAS DE LIMPIEZA -->
+<section class="areas-limpieza">
+  <h2>Áreas de Limpieza</h2>
+
+  <div class="areas-grid">
+
+    <!-- Limpieza Automotriz (categoría 3) -->
+    <div class="area-card">
+      <img src="img/limpiezaautomotriz.png" alt="Automotriz">
+      <p>Automotriz</p>
+      <a href="productos.html?categoria=Limpieza%20Automotriz" class="btn-area">Ver Productos</a>
+    </div>
+
+    <!-- Limpieza del Hogar (categoría 1) -->
+    <div class="area-card">
+      <img src="img/hogar.png" alt="Hogar">
+      <p>Hogar</p>
+      <a href="productos.html?categoria=Limpieza%20del%20Hogar" class="btn-area">Ver Productos</a>
+    </div>
+
+    <!-- Hotelería (usa categoría Hogar) -->
+    <div class="area-card">
+      <img src="img/hotel.png" alt="Hotelería">
+      <p>Hotelería</p>
+      <a href="productos.html?categoria=Limpieza%20del%20Hogar" class="btn-area">Ver Productos</a>
+    </div>
+
+    <!-- Oficina (usa categoría Hogar) -->
+    <div class="area-card">
+      <img src="img/oficina.png" alt="Oficina">
+      <p>Oficina</p>
+      <a href="productos.html?categoria=Limpieza%20del%20Hogar" class="btn-area">Ver Productos</a>
+    </div>
+
+    <!-- Baños (Hogar) - ejemplo llevando a página 4 -->
+    <div class="area-card">
+      <img src="img/baño.png" alt="Baños">
+      <p>Baños</p>
+      <a href="productos.html?categoria=Limpieza%20del%20Hogar&pagina=4" class="btn-area">Ver Productos</a>
+    </div>
+
+    <!-- Cocina (Hogar) -->
+    <div class="area-card">
+      <img src="img/cocina.png" alt="Cocina">
+      <p>Cocina</p>
+      <a href="productos.html?categoria=Limpieza%20del%20Hogar" class="btn-area">Ver Productos</a>
+    </div>
+
+    <!-- Madera (Hogar) -->
+    <div class="area-card">
+      <img src="img/madera.png" alt="Madera">
+      <p>Madera</p>
+      <a href="productos.html?categoria=Limpieza%20del%20Hogar" class="btn-area">Ver Productos</a>
+    </div>
+
+    <!-- Ropa (Hogar) - ejemplo llevando a página 5 -->
+    <div class="area-card">
+      <img src="img/ropa.png" alt="Ropa">
+      <p>Ropa</p>
+      <a href="productos.html?categoria=Limpieza%20del%20Hogar&pagina=5" class="btn-area">Ver Productos</a>
+    </div>
+
+    <!-- Higiene (categoría 2) -->
+    <div class="area-card">
+      <img src="img/higienee.png" alt="Higiene">
+      <p>Higiene</p>
+      <a href="productos.html?categoria=Higiene" class="btn-area">Ver Productos</a>
+    </div>
+
+    <!-- Especializados (categoría 4) -->
+    <div class="area-card">
+      <img src="img/metalica.png" alt="Piezas metálicas">
+      <p>Limpieza de piezas metálicas</p>
+      <a href="productos.html?categoria=Especializados&pagina=1" class="btn-area">Ver Productos</a>
+    </div>
+
+    <div class="area-card">
+      <img src="img/cobre.png" alt="Cobre">
+      <p>Limpieza de piezas de cobre</p>
+      <a href="productos.html?categoria=Especializados&pagina=2" class="btn-area">Ver Productos</a>
+    </div>
+
+  </div>
+</section>
+
+  <script src="index.js"></script>
+
+    <!-- ================= FOOTER ================= -->
+  <footer class="footer">
+    <div class="footer-container">
+
+      <!-- Columna 1 -->
+      <div class="footer-col">
+        <h3>INNOVA División Química</h3>
+        <p><strong>Productos químicos y de consumo con calidad garantizada</strong></p>
+
+        <p><strong>Ubicación:</strong><br>
+          Parque Logistico Odonell<br>
+          Manzana 004, Axotlan, 54716 Cuautitlán Izcalli, Méx.
+        </p>
+
+        <p><strong>Ventas:</strong><br>
+          56-10-13-87-75<br>
+          55-1233-5136, 55-3704-6332
+        </p>
+
+        <p><strong>Whatsapp:</strong> 56-10-13-87-75</p>
+      </div>
+
+      <!-- Columna 2 -->
+      <div class="footer-col">
+        <h3>MENÚ PRINCIPAL</h3>
+        <a href="index.html">Inicio</a>
+        <a href="nosotros.html">Nosotros</a>
+        <a href="productos.html">Catálogo</a>
+        <a href="envios.html">Envíos</a>
+        <a href="contacto.html">Contacto</a>
+        <a href="faq.html">Preguntas Frecuentes</a>
+      </div>
+
+      <!-- Columna 3 -->
+      <div class="footer-col">
+        <h3>MENÚ INFERIOR</h3>
+        <a href="avisopriv.html">Aviso de Privacidad</a>
+        <a href="contacto.html">Contacto</a>
+        <a href="terminosservicio.html">Términos del Servicio</a>
+        <a href="politicapriv.html">Política de Privacidad</a>
+        <a href="politicaenvio.html">Políticas de Envío</a>
+        <a href="politicareembolso.html">Política de Reembolso</a>
+      </div>
+
+      <!-- Columna 4 -->
+      <div class="footer-col">
+        <h3>CONTÁCTANOS</h3>
+        <p>
+          Si necesitas cotizaciones, asesoría o información sobre nuestros productos, envíanos un mensaje y nuestro equipo te atenderá lo más pronto posible.
+        </p>
+
+        <input type="email" placeholder="Tu email" class="footer-input">
+        <button class="footer-btn">Contáctanos</button>
+      </div>
+
+    </div>
+  </footer>
+
+  <!-- ================= WHATSAPP FLOAT ================= -->
+<div class="whatsapp-wrapper">
+  <span class="whatsapp-text">
+    ¿Te puedo ayudar con una cotización?
+  </span>
+
+  <a href="https://wa.me/525610138775"
+     class="whatsapp-float"
+     target="_blank"
+     title="¿Te puedo ayudar con una cotización?">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg"
+         alt="WhatsApp">
+  </a>
+</div>
+
+
+</body>
+</html>

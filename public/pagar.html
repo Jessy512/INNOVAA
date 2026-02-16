@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Pagar - INNOVA División Química</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+    <img src="img/logo.png" alt="innova logo">
+    <nav>
+      <a href="index.html">Inicio</a>
+
+      <div class="dropdown">
+        <a href="#" id="productos-link">Productos ▼</a>
+        <div class="dropdown-content" id="categoria-lista"></div>
+      </div>
+
+      <a href="nosotros.html">Quienes Somos</a>
+      <a href="envios.html">Envíos</a>
+      <a href="contacto.html">Contacto</a>
+      <a href="carrito.html" class="active">Carrito 🛒</a>
+      <a href="faq.html">FAQ</a>
+      
+    </nav>
+</header>
+
+<main class="checkout-container">
+  <!-- Formulario -->
+  <div class="checkout-card">
+    <h2>Contacto y entrega</h2>
+
+    <div class="field">
+      <label for="correo">Correo electrónico</label>
+      <input id="correo" type="email" placeholder="correo@dominio.com" required>
+    </div>
+
+    <div class="field">
+      <label for="nombre">Nombre Completo</label>
+      <input id="nombre" type="text" placeholder="Nombre completo">
+    </div>
+
+    <div class="field">
+      <label for="telefono">Teléfono</label>
+      <input id="telefono" type="text" placeholder="Teléfono">
+    </div>
+
+    <div class="field">
+      <label for="telefono">Dirección</label>
+      <input id="telefono" type="text" placeholder="Dirección">
+    </div>
+
+    <div class="field">
+      <label for="telefono">Casa, apartamento, etc. (opcional)</label>
+      <input id="telefono" type="text" placeholder="Casa, apartamento, etc.">
+    </div>
+
+    <div class="field">
+      <label for="telefono">Codigo Postal</label>
+      <input id="telefono" type="text" placeholder="CP">
+    </div>
+
+    <div class="field">
+      <label for="telefono">Delegación o Municipio</label>
+      <input id="telefono" type="text" placeholder="Delegación o Municipio">
+    </div>
+
+    <div class="field">
+      <label for="telefono">Estado</label>
+      <input id="telefono" type="text" placeholder="Estado">
+    </div>
+
+    <div class="field">
+  <label>Pago</label>
+
+  <label class="pago-opcion">
+    <input type="radio" name="metodo" value="mercadopago" checked>
+    <div class="pago-box">
+      <strong>Mercado Pago</strong>
+      <p>Después de hacer clic en "Pagar ahora", serás redirigido a Mercado Pago.</p>
+    </div>
+  </label>
+
+  <label class="pago-opcion">
+    <input type="radio" name="metodo" value="clip">
+    <div class="pago-box">
+      <strong>Clip</strong>
+      <p>Paga con crédito, débito o efectivo.</p>
+    </div>
+  </label>
+</div>
+
+
+
+    <div class="field">
+      <label for="solicita-envio">¿Requiere envío?</label>
+      <select id="solicita-envio">
+        <option value="no">No, pasaré por la sucursal</option>
+        <option value="si">Sí, enviar a domicilio</option>
+      </select>
+    </div>
+
+    <div id="datos-envio" style="display:none;">
+      <div class="field"><label for="direccion">Dirección de Envio</label><input id="direccion" type="text" placeholder="Calle, número, entre calles"></div>
+      <div class="field"><label for="ciudad">Delegación o Municipio</label><input id="ciudad" type="text" placeholder="Ciudad"></div>
+      <div class="field"><label for="cp">Código Postal</label><input id="cp" type="text" placeholder="CP"></div>
+      <div class="field"><label for="estado">Estado</label><input id="estado" type="text" placeholder="Estado"></div>
+    </div>
+
+    <div class="field">
+  <label>¿Requiere factura?</label>
+  <select id="factura">
+    <option value="no">No</option>
+    <option value="si">Sí</option>
+  </select>
+  <div id="datos-factura" style="display:none;">
+      <div class="field"><label for="direccion">Nombre</label><input id="direccion" type="text" placeholder="Calle, número, entre calles"></div>
+      <div class="field"><label for="ciudad">Apellidos</label><input id="ciudad" type="text" placeholder="Ciudad"></div>
+      <div class="field"><label for="cp">Dirección fiscal</label><input id="cp" type="text" placeholder="CP"></div>
+      <div class="field"><label for="estado">CP</label><input id="estado" type="text" placeholder="Estado"></div>
+      <div class="field"><label for="estado">Ciudad</label><input id="estado" type="text" placeholder="Estado"></div>
+      <div class="field"><label for="estado">Estado</label><input id="estado" type="text" placeholder="Estado"></div>
+      <div class="field"><label for="estado">Teléfono</label><input id="estado" type="text" placeholder="Estado"></div>
+    </div>
+</div>
+
+    <div class="field">
+      <label for="notas">Notas (opcional)</label>
+      <input id="notas" type="text" placeholder="Observaciones de entrega">
+    </div>
+
+    <button id="btn-pagar" class="btn-checkout">Pagar ahora</button>
+
+
+    <p class="small-muted" style="margin-top:10px;">* Si eliges Mercado Pago serás redirigido a una pasarela segura para procesar la tarjeta. Si eliges transferencia/depósito o contra entrega, la venta se registrará y luego coordinaremos la entrega.</p>
+    <div id="error-msg" style="color:#b00020;margin-top:10px;display:none;"></div>
+  </div>
+
+  <!-- Resumen -->
+  <aside class="checkout-card">
+    <h2>Resumen de tu pedido</h2>
+    <!-- <div id="items-list" style="margin-bottom:12px;"></div>-->
+    <div id="items-list"></div>
+
+
+    <div class="subtotal-box">
+      <p id="subtotal-line">Subtotal: $0.00</p>
+      <p id="envio-line">Envío: $0.00</p>
+      <p id="total-line" style="font-weight:700;">Total: $0.00</p>
+    </div>
+
+    <div style="display:flex; gap:8px; margin-top:10px;">
+  <a href="productos.html" class="btn-checkout" style="background:#333;text-decoration:none;text-align:center;">
+    Seguir comprando
+  </a>
+  <a href="carrito.html" class="btn-checkout" style="background:#333;text-decoration:none;text-align:center;">
+    Volver al carrito
+  </a>
+</div>
+
+  </aside>
+</main>
+
+<script src="pagar.js"></script>
+<!-- ================= FOOTER ================= -->
+  <footer class="footer">
+    <div class="footer-container">
+
+      <!-- Columna 1 -->
+      <div class="footer-col">
+        <h3>INNOVA División Química</h3>
+        <p><strong>Productos químicos y de consumo con calidad garantizada</strong></p>
+
+        <p><strong>Ubicación:</strong><br>
+          Parque Logistico Odonell<br>
+          Manzana 004, Axotlan, 54716 Cuautitlán Izcalli, Méx.
+        </p>
+
+        <p><strong>Ventas:</strong><br>
+          56-10-13-87-75<br>
+          55-1233-5136, 55-3704-6332
+        </p>
+
+        <p><strong>Whatsapp:</strong> 56-10-13-87-75</p>
+      </div>
+
+      <!-- Columna 2 -->
+      <div class="footer-col">
+        <h3>MENÚ PRINCIPAL</h3>
+        <a href="index.html">Inicio</a>
+        <a href="nosotros.html">Nosotros</a>
+        <a href="productos.html">Catálogo</a>
+        <a href="envios.html">Envíos</a>
+        <a href="contacto.html">Contacto</a>
+        <a href="faq.html">Preguntas Frecuentes</a>
+      </div>
+
+      <!-- Columna 3 -->
+      <div class="footer-col">
+        <h3>MENÚ INFERIOR</h3>
+        <a href="avisopriv.html">Aviso de Privacidad</a>
+        <a href="contacto.html">Contacto</a>
+        <a href="terminosservicio.html">Términos del Servicio</a>
+        <a href="politicapriv.html">Política de Privacidad</a>
+        <a href="politicaenvio.html">Políticas de Envío</a>
+        <a href="politicareembolso.html">Política de Reembolso</a>
+      </div>
+
+      <!-- Columna 4 -->
+      <div class="footer-col">
+        <h3>CONTÁCTANOS</h3>
+        <p>
+          Si necesitas cotizaciones, asesoría o información sobre nuestros productos, envíanos un mensaje y nuestro equipo te atenderá lo más pronto posible.
+        </p>
+
+        <input type="email" placeholder="Tu email" class="footer-input">
+        <button class="footer-btn">Contáctanos</button>
+      </div>
+
+    </div>
+  </footer>
+
+  <!-- ================= WHATSAPP FLOAT ================= -->
+<div class="whatsapp-wrapper">
+  <span class="whatsapp-text">
+    ¿Te puedo ayudar con una cotización?
+  </span>
+
+  <a href="https://wa.me/525610138775"
+     class="whatsapp-float"
+     target="_blank"
+     title="¿Te puedo ayudar con una cotización?">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg"
+         alt="WhatsApp">
+  </a>
+</div>
+
+</body>
+</html>
