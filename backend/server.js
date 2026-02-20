@@ -339,5 +339,5 @@ app.post("/api/webhook-mercadopago", async (req, res) => {
 
 
 app.listen(PORT, () => {
-  console.log(`Servidor corriendo en puerto ${PORT}`);
+  console.log("Servidor corriendo en puerto", PORT);
 });
