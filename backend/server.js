@@ -1,5 +1,18 @@
 const express = require("express");
-const mysql = require("mysql2");
+const { Pool } = require('pg');
+
+const { Pool } = require('pg');
+
+const pool = new Pool({
+  connectionString: process.env.DATABASE_URL,
+  ssl: {
+    rejectUnauthorized: false
+  }
+});
+
+
+
+//const mysql = require("mysql2");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const path = require("path");
@@ -35,12 +48,12 @@ app.use(express.static(path.join(__dirname, "../public")));
 //------------------------------------------------------
 // MySQL
 //------------------------------------------------------
-const db = mysql.createConnection({
-  host: "localhost",
-  user: "root",
-  password: "Mocosito1416",
-  database: "innova",
-});
+//const db = mysql.createConnection({
+  //host: "localhost",
+  //user: "root",
+  //password: "Mocosito1416",
+  //database: "innova",
+//});
 
 db.connect(err => {
   if (err) return console.error(err);
@@ -54,7 +67,7 @@ db.connect(err => {
 //------------------------------------------------------
 // API PRODUCTOS (CATÁLOGO)
 //------------------------------------------------------
-app.get("/api/productos", (req, res) => {
+app.get("/api/productos", async (req, res) => {
   const sql = `
     SELECT
       p.id AS producto_id,
@@ -73,21 +86,21 @@ app.get("/api/productos", (req, res) => {
     INNER JOIN presentaciones pr ON pr.producto_id = p.id
   `;
 
-  db.query(sql, (err, results) => {
-    if (err) {
-      console.error("❌ Error productos:", err);
-      return res.status(500).json({ error: "Error al obtener productos" });
-    }
-
-    res.json(results);
-  });
+  try {
+    const result = await pool.query(sql);
+    res.json(result.rows);
+  } catch (err) {
+    console.error("❌ Error productos:", err);
+    res.status(500).json({ error: "Error al obtener productos" });
+  }
 });
+
 
 
 //------------------------------------------------------
 // API DETALLE DE PRESENTACIÓN
 //------------------------------------------------------
-app.get("/api/presentacion/:id", (req, res) => {
+app.get("/api/presentacion/:id", async (req, res) => {
   const { id } = req.params;
 
   const sql = `
@@ -104,7 +117,7 @@ app.get("/api/presentacion/:id", (req, res) => {
       c.nombre AS categoria,
 
       (
-        SELECT JSON_ARRAYAGG(pi.url)
+        SELECT json_agg(pi.url)
         FROM presentacion_imagenes pi
         WHERE pi.presentacion_id = pr.id
       ) AS imagenes
@@ -112,34 +125,32 @@ app.get("/api/presentacion/:id", (req, res) => {
     FROM presentaciones pr
     INNER JOIN productos p ON pr.producto_id = p.id
     INNER JOIN categorias c ON p.categoria_id = c.id
-    WHERE pr.id = ?
+    WHERE pr.id = $1
     LIMIT 1
   `;
 
-  db.query(sql, [id], (err, results) => {
-    if (err) {
-      console.error("❌ Error detalle:", err);
-      return res.status(500).json({ error: "Error al obtener detalle" });
-    }
+  try {
+    const result = await pool.query(sql, [id]);
 
-    if (results.length === 0) {
+    if (result.rows.length === 0) {
       return res.status(404).json({ error: "Producto no encontrado" });
     }
 
-    const data = results[0];
+    const data = result.rows[0];
 
-    // Si imagenes viene como string JSON, parsearlo
-    if (typeof data.imagenes === "string") {
-      try {
-        data.imagenes = JSON.parse(data.imagenes);
-      } catch {
-        data.imagenes = [];
-      }
+    // Si no hay imágenes, devolver arreglo vacío
+    if (!data.imagenes) {
+      data.imagenes = [];
     }
 
     res.json(data);
-  });
+
+  } catch (err) {
+    console.error("❌ Error detalle:", err);
+    res.status(500).json({ error: "Error al obtener detalle" });
+  }
 });
+
 
 
 
