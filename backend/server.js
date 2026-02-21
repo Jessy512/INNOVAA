@@ -49,7 +49,7 @@ app.use(express.urlencoded({ extended: true }));
 
 
 // PostgreSQL conexión Render
-const db = new Pool({
+const pool = new Pool({
   user: process.env.DB_USER || "innova_db_6alp_user",      // Usuario de Render
   host: process.env.DB_HOST || "dpg-d69fltcr85hc73daq930-a", // Host interno de Render
   database: process.env.DB_NAME || "innova_db_6alp",       // Nombre de la DB
