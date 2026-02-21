@@ -352,6 +352,7 @@ app.post("/api/webhook-mercadopago", async (req, res) => {
 
 
 
-app.listen(PORT, () => {
-  console.log("Servidor corriendo en puerto", PORT);
+// Para cualquier ruta que no sea API, enviar index.html
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "../public/index.html"));
 });
