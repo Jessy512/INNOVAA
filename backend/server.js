@@ -2,15 +2,6 @@ const express = require("express");
 
 const { Pool } = require('pg');
 
-const pool = new Pool({
-  connectionString: process.env.DATABASE_URL,
-  ssl: {
-    rejectUnauthorized: false
-  }
-});
-
-
-
 //const mysql = require("mysql2");
 const bodyParser = require("body-parser");
 const cors = require("cors");
@@ -67,11 +58,11 @@ const db = new Pool({
   ssl: { rejectUnauthorized: false }                       // Necesario para Render
 });
 
-db.connect(err => {
+pool.connect(err => {
   if (err) {
-    console.error('Error connecting to the database', err.stack);
+    console.error('❌ Error connecting to the database', err.stack);
   } else {
-    console.log('Connected to the database');
+    console.log('✅ Connected to the database');
   }
 });
 
@@ -354,7 +345,8 @@ app.post("/api/webhook-mercadopago", async (req, res) => {
 
 
 
-// Para cualquier ruta que no sea API, enviar index.html
+// Esta va al final de todo server.js
 app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "../public/index.html"));
+  res.sendFile(path.join(__dirname, "public", "index.html"));
 });
+
