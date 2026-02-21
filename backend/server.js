@@ -15,6 +15,8 @@ const pool = new Pool({
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const path = require("path");
+
+
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
 require("dotenv").config();
 const nodemailer = require("nodemailer");
@@ -36,13 +38,18 @@ const app = express();
 
 const PORT = process.env.PORT || 3000;
 
+const path = require("path");
+
 // Middleware
 app.use(cors());
 app.use(express.json());
-app.use(express.static("public"));
+app.use(express.static(path.join(__dirname, "public")));
 app.use(bodyParser.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(express.static(path.join(__dirname, "../public")));
+
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "public", "index.html"));
+});
 
 //------------------------------------------------------
 // MySQL
