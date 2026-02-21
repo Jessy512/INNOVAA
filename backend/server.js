@@ -22,6 +22,7 @@ const { MercadoPagoConfig, Preference, Payment } = require("mercadopago");
 const mpClient = new MercadoPagoConfig({
   accessToken: process.env.MP_ACCESS_TOKEN
 });
+const payment = new Payment(mpClient);
 //------------------------------------------------------
 
 const app = express();
