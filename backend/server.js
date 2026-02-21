@@ -59,7 +59,7 @@ app.use(express.static(path.join(__dirname, "../public")));
 const db = new Pool({
   user: process.env.DB_USER || "innova_db_6alp_user",      // Usuario de Render
   host: process.env.DB_HOST || "dpg-d69fltcr85hc73daq930-a", // Host interno de Render
-  database: process.env.DB_NAME || "innova-db",       // Nombre de la DB
+  database: process.env.DB_NAME || "innova_db_6alp",       // Nombre de la DB
   password: process.env.DB_PASS || "f3kWo19AzhaYWS0DZIjWqMSQystV7hFx",         // Pon aquí la contraseña real de Render
   port: process.env.DB_PORT || 5432,                       // Puerto (normalmente 5432)
   ssl: { rejectUnauthorized: false }                       // Necesario para Render
