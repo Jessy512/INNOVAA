@@ -348,13 +348,13 @@ app.post("/api/webhook-mercadopago", async (req, res) => {
 
 // Esta va al final de todo server.js
 
-app.get("*", (req, res) => {
-  const indexPath = path.join(__dirname, "public", "index.html");
-  if (fs.existsSync(indexPath)) {
-    res.sendFile(indexPath);
-  } else {
-    res.status(404).send("Archivo no encontrado");
-  }
-});
+//app.get("*", (req, res) => {
+  //const indexPath = path.join(__dirname, "public", "index.html");
+  //if (fs.existsSync(indexPath)) {
+    //res.sendFile(indexPath);
+  //} else {
+    //res.status(404).send("Archivo no encontrado");
+  //}
+//});
 
 
