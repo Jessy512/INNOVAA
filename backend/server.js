@@ -30,7 +30,6 @@ const app = express();
 
 const PORT = process.env.PORT || 3000;
 
-
 // Middleware
 app.use(cors());
 app.use(express.json());
@@ -348,9 +347,15 @@ app.post("/api/webhook-mercadopago", async (req, res) => {
 
 // Esta va al final de todo server.js
 
-app.get("/", (req, res) => {
+app.listen(PORT, () => {
+  console.log(`🚀 Servidor corriendo en puerto ${PORT}`);
+});
+
+app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "public", "index.html"));
 });
+
+
 
 
 
