@@ -38,7 +38,6 @@ const app = express();
 
 const PORT = process.env.PORT || 3000;
 
-const path = require("path");
 
 // Middleware
 app.use(cors());
