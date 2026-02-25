@@ -6,7 +6,7 @@ const { Pool } = require('pg');
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const path = require("path");
-
+app.use(express.static(path.join(__dirname, '../public')));
 
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
 require("dotenv").config();
@@ -33,7 +33,6 @@ const PORT = process.env.PORT || 3000;
 // Middleware
 app.use(cors());
 app.use(express.json());
-app.use(express.static(path.join(__dirname, "../public")));
 app.use(bodyParser.json());
 app.use(express.urlencoded({ extended: true }));
 
