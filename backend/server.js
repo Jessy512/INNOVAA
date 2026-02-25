@@ -33,7 +33,7 @@ const PORT = process.env.PORT || 3000;
 // Middleware
 app.use(cors());
 app.use(express.json());
-app.use(express.static(path.join(__dirname, "public")));
+app.use(express.static(path.join(__dirname, "..", "public")));
 app.use(bodyParser.json());
 app.use(express.urlencoded({ extended: true }));
 
@@ -347,8 +347,8 @@ app.post("/api/webhook-mercadopago", async (req, res) => {
 
 // Esta va al final de todo server.js
 
-app.use((req, res) => {
-  res.sendFile(path.join(__dirname, "public", "index.html"));
+app.get((req, res) => {
+  res.sendFile(path.join(__dirname, "..", "public", "index.html"));
 });
 
 
