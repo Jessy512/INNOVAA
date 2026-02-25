@@ -346,7 +346,7 @@ app.post("/api/webhook-mercadopago", async (req, res) => {
 
 // Esta va al final de todo server.js
 
-app.get("/*", (req, res) => {
+app.get((req, res) => {
   res.sendFile(path.join(__dirname, "../public/index.html"));
 });
 
