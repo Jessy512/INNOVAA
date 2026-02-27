@@ -163,15 +163,15 @@ app.get("/api/presentacion/:id", async (req, res) => {
 //------------------------------------------------------
 // SMTP (BREVO)
 //------------------------------------------------------
-const transporter = nodemailer.createTransport({
-  host: process.env.SMTP_HOST,
-  port: Number(process.env.SMTP_PORT),
-  secure: true, // 🔥 IMPORTANTE
-  auth: {
-    user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASS
-  }
-});
+const SibApiV3Sdk = require('@getbrevo/brevo');
+
+const apiInstance = new SibApiV3Sdk.TransactionalEmailsApi();
+
+apiInstance.setApiKey(
+  SibApiV3Sdk.TransactionalEmailsApiApiKeys.apiKey,
+  process.env.BREVO_API_KEY
+);
+
 
 
 
@@ -221,20 +221,21 @@ app.post("/api/contacto", async (req, res) => {
   }
 
   try {
-    await transporter.sendMail({
-      from: `"Formulario INNOVA" <${process.env.FROM_EMAIL}>`,
-      to: process.env.EMAIL_SEND_TO,
-      subject: "📩 Nuevo mensaje de contacto",
-      html: `
-        <h3>Nuevo mensaje de contacto</h3>
-        <p><strong>Nombre:</strong> ${nombre}</p>
-        <p><strong>Correo:</strong> ${correo}</p>
-        <p><strong>Teléfono:</strong> ${telefono}</p>
-        <p><strong>Empresa:</strong> ${empresa || "No especificada"}</p>
-        <p><strong>Mensaje:</strong></p>
-        <p>${mensaje}</p>
-      `
-    });
+    await apiInstance.sendTransacEmail({
+  sender: { email: process.env.FROM_EMAIL, name: "INNOVA" },
+  to: [{ email: process.env.EMAIL_SEND_TO }],
+  subject: "📩 Nuevo mensaje de contacto",
+  htmlContent: `
+    <h3>Nuevo mensaje de contacto</h3>
+    <p><strong>Nombre:</strong> ${nombre}</p>
+    <p><strong>Correo:</strong> ${correo}</p>
+    <p><strong>Teléfono:</strong> ${telefono}</p>
+    <p><strong>Empresa:</strong> ${empresa || "No especificada"}</p>
+    <p><strong>Mensaje:</strong></p>
+    <p>${mensaje}</p>
+  `
+});
+
 
     res.json({ success: true });
 
