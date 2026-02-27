@@ -6,8 +6,13 @@ const { Pool } = require('pg');
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const path = require("path");
+
 const SibApiV3Sdk = require('@getbrevo/brevo');
+
 const apiInstance = new SibApiV3Sdk.TransactionalEmailsApi();
+
+
+
 
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
 require("dotenv").config();
@@ -37,16 +42,6 @@ app.use(express.json());
 app.use(express.static(path.join(__dirname, "../public")));
 app.use(bodyParser.json());
 app.use(express.urlencoded({ extended: true }));
-
-//------------------------------------------------------
-// MySQL
-//------------------------------------------------------
-//const db = mysql.createConnection({
-  //host: "localhost",
-  //user: "root",
-  //password: "Mocosito1416",
-  //database: "innova",
-//});
 
 
 // PostgreSQL conexión Render
@@ -173,7 +168,6 @@ apiInstance.setApiKey(
 
 
 
-
 //------------------------------------------------------
 // UTILIDAD: CREAR PDF TICKET
 //------------------------------------------------------
@@ -220,20 +214,24 @@ app.post("/api/contacto", async (req, res) => {
 
   try {
     await apiInstance.sendTransacEmail({
-  sender: { email: process.env.FROM_EMAIL, name: "INNOVA" },
-  to: [{ email: process.env.EMAIL_SEND_TO }],
-  subject: "📩 Nuevo mensaje de contacto",
-  htmlContent: `
-    <h3>Nuevo mensaje de contacto</h3>
-    <p><strong>Nombre:</strong> ${nombre}</p>
-    <p><strong>Correo:</strong> ${correo}</p>
-    <p><strong>Teléfono:</strong> ${telefono}</p>
-    <p><strong>Empresa:</strong> ${empresa || "No especificada"}</p>
-    <p><strong>Mensaje:</strong></p>
-    <p>${mensaje}</p>
-  `
-});
-
+      sender: { 
+        email: process.env.FROM_EMAIL, 
+        name: "INNOVA" 
+      },
+      to: [{ 
+        email: process.env.EMAIL_SEND_TO 
+      }],
+      subject: "📩 Nuevo mensaje de contacto",
+      htmlContent: `
+        <h3>Nuevo mensaje de contacto</h3>
+        <p><strong>Nombre:</strong> ${nombre}</p>
+        <p><strong>Correo:</strong> ${correo}</p>
+        <p><strong>Teléfono:</strong> ${telefono}</p>
+        <p><strong>Empresa:</strong> ${empresa || "No especificada"}</p>
+        <p><strong>Mensaje:</strong></p>
+        <p>${mensaje}</p>
+      `
+    });
 
     res.json({ success: true });
 
@@ -242,6 +240,7 @@ app.post("/api/contacto", async (req, res) => {
     res.status(500).json({ error: "No se pudo enviar el correo" });
   }
 });
+
 
 
 //------------------------------------------------------
