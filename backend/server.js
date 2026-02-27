@@ -6,6 +6,8 @@ const { Pool } = require('pg');
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const path = require("path");
+const SibApiV3Sdk = require('@getbrevo/brevo');
+const apiInstance = new SibApiV3Sdk.TransactionalEmailsApi();
 
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
 require("dotenv").config();
@@ -163,10 +165,6 @@ app.get("/api/presentacion/:id", async (req, res) => {
 //------------------------------------------------------
 // SMTP (BREVO)
 //------------------------------------------------------
-const SibApiV3Sdk = require('@getbrevo/brevo');
-
-const apiInstance = new SibApiV3Sdk.TransactionalEmailsApi();
-
 apiInstance.setApiKey(
   SibApiV3Sdk.TransactionalEmailsApiApiKeys.apiKey,
   process.env.BREVO_API_KEY
