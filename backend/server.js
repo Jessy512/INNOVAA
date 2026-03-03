@@ -7,12 +7,6 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 const path = require("path");
 
-const SibApiV3Sdk = require('@getbrevo/brevo');
-
-const client = SibApiV3Sdk.ApiClient.instance;
-client.authentications['api-key'].apiKey = process.env.BREVO_API_KEY;
-
-const apiInstance = new SibApiV3Sdk.TransactionalEmailsApi(client);
 
 
 
@@ -213,33 +207,49 @@ app.post("/api/contacto", async (req, res) => {
   }
 
   try {
-    await apiInstance.sendTransacEmail({
-      sender: { 
-        email: process.env.FROM_EMAIL, 
-        name: "INNOVA" 
+    const response = await fetch("https://api.brevo.com/v3/smtp/email", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "api-key": process.env.BREVO_API_KEY
       },
-      to: [{ 
-        email: process.env.EMAIL_SEND_TO 
-      }],
-      subject: "📩 Nuevo mensaje de contacto",
-      htmlContent: `
-        <h3>Nuevo mensaje de contacto</h3>
-        <p><strong>Nombre:</strong> ${nombre}</p>
-        <p><strong>Correo:</strong> ${correo}</p>
-        <p><strong>Teléfono:</strong> ${telefono}</p>
-        <p><strong>Empresa:</strong> ${empresa || "No especificada"}</p>
-        <p><strong>Mensaje:</strong></p>
-        <p>${mensaje}</p>
-      `
+      body: JSON.stringify({
+        sender: {
+          email: process.env.FROM_EMAIL,
+          name: "INNOVA"
+        },
+        to: [
+          {
+            email: process.env.EMAIL_SEND_TO
+          }
+        ],
+        subject: "📩 Nuevo mensaje de contacto",
+        htmlContent: `
+          <h3>Nuevo mensaje de contacto</h3>
+          <p><strong>Nombre:</strong> ${nombre}</p>
+          <p><strong>Correo:</strong> ${correo}</p>
+          <p><strong>Teléfono:</strong> ${telefono}</p>
+          <p><strong>Empresa:</strong> ${empresa || "No especificada"}</p>
+          <p><strong>Mensaje:</strong></p>
+          <p>${mensaje}</p>
+        `
+      })
     });
+
+    if (!response.ok) {
+      const errorData = await response.text();
+      console.error("Error Brevo:", errorData);
+      return res.status(500).json({ error: "No se pudo enviar el correo" });
+    }
 
     res.json({ success: true });
 
   } catch (error) {
-    console.error("❌ Error correo:", error);
-    res.status(500).json({ error: "No se pudo enviar el correo" });
+    console.error("❌ Error servidor:", error);
+    res.status(500).json({ error: "Error interno" });
   }
 });
+
 
 
 
