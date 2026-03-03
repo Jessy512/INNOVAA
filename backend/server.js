@@ -9,7 +9,10 @@ const path = require("path");
 
 const SibApiV3Sdk = require('@getbrevo/brevo');
 
-const apiInstance = new SibApiV3Sdk.TransactionalEmailsApi();
+const client = SibApiV3Sdk.ApiClient.instance;
+client.authentications['api-key'].apiKey = process.env.BREVO_API_KEY;
+
+const apiInstance = new SibApiV3Sdk.TransactionalEmailsApi(client);
 
 
 
@@ -160,10 +163,7 @@ app.get("/api/presentacion/:id", async (req, res) => {
 //------------------------------------------------------
 // SMTP (BREVO)
 //------------------------------------------------------
-apiInstance.setApiKey(
-  SibApiV3Sdk.TransactionalEmailsApiApiKeys.apiKey,
-  process.env.BREVO_API_KEY
-);
+
 
 
 
