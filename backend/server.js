@@ -258,8 +258,8 @@ app.post("/api/crear-preferencia", async (req, res) => {
     const result = await preference.create({
       body: {
         items: items.map(item => ({
-          title: `${item.producto_nombre} ${item.volumen}`,
-          quantity: Number(item.cantidad),
+          title: item.nombre || item.producto_nombre || "Producto",
+          quantity: Number(item.cantidad || 1),
           unit_price: Number(item.precio),
           currency_id: "MXN"
         })),
