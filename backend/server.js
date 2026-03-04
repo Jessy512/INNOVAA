@@ -8,7 +8,7 @@ const path = require("path");
 
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
 require("dotenv").config();
-const nodemailer = require("nodemailer");
+
 const fs = require("fs");
 const PDFDocument = require("pdfkit");
 
@@ -144,7 +144,6 @@ app.get("/api/presentacion/:id", async (req, res) => {
     res.status(500).json({ error: "Error al obtener detalle" });
   }
 });
-
 
 
 
@@ -295,52 +294,88 @@ app.post("/api/webhook-mercadopago", async (req, res) => {
     const paymentId = req.body?.data?.id;
     if (!paymentId) return res.sendStatus(200);
 
+    // 1️⃣ Obtener pago
     const pago = await payment.get({ id: paymentId });
+
     if (pago.status !== "approved") return res.sendStatus(200);
 
     const correoCliente = pago.payer.email;
     const total = pago.transaction_amount;
+    const preferenceId = pago.preference_id;
 
-    // 🧾 Generar PDF
-    const pdfPath = await generarPDF({
-      pagoId: paymentId,
-      correo: correoCliente,
-      total
+    // 2️⃣ Obtener preferencia (para saber productos)
+    const preference = new Preference(mpClient);
+    const prefData = await preference.get({ preferenceId });
+
+    const productos = prefData.items;
+
+    // 3️⃣ Crear HTML con productos
+    let listaProductos = "";
+    productos.forEach(p => {
+      listaProductos += `
+        <li>
+          ${p.title} - Cantidad: ${p.quantity} - $${p.unit_price}
+        </li>
+      `;
     });
 
-    // 📩 Cliente
-    await transporter.sendMail({
-      from: `"INNOVA" <${process.env.FROM_EMAIL}>`,
-      to: correoCliente,
-      subject: "🧾 Tu ticket de compra - INNOVA",
-      html: `<p>Gracias por tu compra. Adjuntamos tu ticket.</p>`,
-      attachments: [{ filename: "ticket.pdf", path: pdfPath }]
+    const htmlContent = `
+      <h2>🛒 Detalle de tu compra</h2>
+      <ul>
+        ${listaProductos}
+      </ul>
+      <p><strong>Total pagado:</strong> $${total} MXN</p>
+      <p>Gracias por tu compra 💙</p>
+    `;
+
+    // 4️⃣ Enviar correo al CLIENTE
+    await fetch("https://api.brevo.com/v3/smtp/email", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "api-key": process.env.BREVO_API_KEY
+      },
+      body: JSON.stringify({
+        sender: {
+          email: process.env.FROM_EMAIL,
+          name: "INNOVA"
+        },
+        to: [{ email: correoCliente }],
+        subject: "🧾 Confirmación de compra - INNOVA",
+        htmlContent
+      })
     });
 
-    // 📩 Admin
-    await transporter.sendMail({
-      from: `"INNOVA Sistema" <${process.env.FROM_EMAIL}>`,
-      to: process.env.EMAIL_SEND_TO,
-      subject: "💰 Nueva compra confirmada",
-      html: `
-        <p>Se realizó una nueva compra.</p>
-        <p><strong>Cliente:</strong> ${correoCliente}</p>
-        <p><strong>Total:</strong> $${total} MXN</p>
-      `,
-      attachments: [{ filename: "ticket.pdf", path: pdfPath }]
+    // 5️⃣ Enviar correo al ADMIN (tú)
+    await fetch("https://api.brevo.com/v3/smtp/email", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "api-key": process.env.BREVO_API_KEY
+      },
+      body: JSON.stringify({
+        sender: {
+          email: process.env.FROM_EMAIL,
+          name: "Sistema INNOVA"
+        },
+        to: [{ email: process.env.EMAIL_SEND_TO }],
+        subject: "💰 Nueva venta realizada",
+        htmlContent: `
+          <h2>Nueva venta confirmada</h2>
+          <p><strong>Cliente:</strong> ${correoCliente}</p>
+          ${htmlContent}
+        `
+      })
     });
 
     res.sendStatus(200);
+
   } catch (err) {
     console.error("❌ Error webhook:", err);
     res.sendStatus(500);
   }
 });
 
-//------------------------------------------------------
-//app.listen(PORT, () => {
-  //console.log(`🚀 Servidor corriendo en http://localhost:${PORT}`);
-//});
 
 
 
