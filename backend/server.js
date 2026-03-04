@@ -1,5 +1,4 @@
 const express = require("express");
-
 const { Pool } = require('pg');
 
 //const mysql = require("mysql2");
@@ -7,16 +6,11 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 const path = require("path");
 
-
-
-
-
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
 require("dotenv").config();
 const nodemailer = require("nodemailer");
 const fs = require("fs");
 const PDFDocument = require("pdfkit");
-
 
 const { MercadoPagoConfig, Preference, Payment } = require("mercadopago");
 
@@ -272,13 +266,13 @@ app.post("/api/crear-preferencia", async (req, res) => {
         })),
 
         back_urls: {
-          success: "https://finnier-wrigglingly-yair.ngrok-free.dev/pago-exitoso.html",
-          failure: "https://finnier-wrigglingly-yair.ngrok-free.dev/pago-fallido.html",
-          pending: "https://finnier-wrigglingly-yair.ngrok-free.dev/pago-pendiente.html"
+          success: "https://innovaa-13.onrender.com/index.html",
+          failure: "https://innovaa-13.onrender.com/index.html",
+          pending: "https://innovaa-13.onrender.com/index.html"
         },
 
         notification_url:
-          "https://finnier-wrigglingly-yair.ngrok-free.dev/api/webhook-mercadopago",
+          "https://innovaa-13.onrender.com/api/webhook-mercadopago",
 
         auto_return: "approved"
       }
