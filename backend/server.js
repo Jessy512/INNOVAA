@@ -256,26 +256,31 @@ app.post("/api/crear-preferencia", async (req, res) => {
     const preference = new Preference(mpClient);
 
     const result = await preference.create({
-      body: {
-        items: items.map(item => ({
-          title: item.nombre || item.producto_nombre || "Producto",
-          quantity: Number(item.cantidad || 1),
-          unit_price: Number(item.precio),
-          currency_id: "MXN"
-        })),
+  body: {
+    items: items.map(item => ({
+      title: item.nombre || item.producto_nombre || "Producto",
+      quantity: Number(item.cantidad || 1),
+      unit_price: Number(item.precio),
+      currency_id: "MXN"
+    })),
 
-        back_urls: {
-          success: "https://innovaa-13.onrender.com/index.html",
-          failure: "https://innovaa-13.onrender.com/index.html",
-          pending: "https://innovaa-13.onrender.com/index.html"
-        },
+    // 🔥 AGREGAMOS ESTO
+    metadata: {
+      productos: items
+    },
 
-        notification_url:
-          "https://innovaa-13.onrender.com/api/webhook-mercadopago",
+    back_urls: {
+      success: "https://innovaa-13.onrender.com/index.html",
+      failure: "https://innovaa-13.onrender.com/index.html",
+      pending: "https://innovaa-13.onrender.com/index.html"
+    },
 
-        auto_return: "approved"
-      }
-    });
+    notification_url:
+      "https://innovaa-13.onrender.com/api/webhook-mercadopago",
+
+    auto_return: "approved"
+  }
+});
 
     res.json({ init_point: result.init_point });
 
@@ -301,23 +306,22 @@ app.post("/api/webhook-mercadopago", async (req, res) => {
 
     const correoCliente = pago.payer.email;
     const total = pago.transaction_amount;
-    const preferenceId = pago.preference_id;
+    // 🔥 Leer productos desde metadata
+    const productos = pago.metadata?.productos || [];
 
-    // 2️⃣ Obtener preferencia (para saber productos)
-    const preference = new Preference(mpClient);
-    const prefData = await preference.get({ preferenceId });
-
-    const productos = prefData.items;
 
     // 3️⃣ Crear HTML con productos
     let listaProductos = "";
-    productos.forEach(p => {
-      listaProductos += `
-        <li>
-          ${p.title} - Cantidad: ${p.quantity} - $${p.unit_price}
-        </li>
-      `;
-    });
+
+productos.forEach(p => {
+  listaProductos += `
+    <li>
+      ${p.nombre || p.producto_nombre} 
+      - Cantidad: ${p.cantidad}
+      - $${p.precio}
+    </li>
+  `;
+});
 
     const htmlContent = `
       <h2>🛒 Detalle de tu compra</h2>
