@@ -251,36 +251,37 @@ app.post("/api/contacto", async (req, res) => {
 //------------------------------------------------------
 app.post("/api/crear-preferencia", async (req, res) => {
   try {
-    const { items } = req.body;
+
+    const { items, cliente } = req.body;
 
     const preference = new Preference(mpClient);
 
     const result = await preference.create({
-  body: {
-    items: items.map(item => ({
-      title: item.nombre || item.producto_nombre || "Producto",
-      quantity: Number(item.cantidad || 1),
-      unit_price: Number(item.precio),
-      currency_id: "MXN"
-    })),
+      body: {
+        items: items.map(item => ({
+          title: item.nombre || item.producto_nombre || "Producto",
+          quantity: Number(item.cantidad || 1),
+          unit_price: Number(item.precio),
+          currency_id: "MXN"
+        })),
 
-    // 🔥 AGREGAMOS ESTO
-    metadata: {
-      productos: items
-    },
+        metadata: {
+          productos: items,
+          cliente: cliente
+        },
 
-    back_urls: {
-      success: "https://innovaa-13.onrender.com/index.html",
-      failure: "https://innovaa-13.onrender.com/index.html",
-      pending: "https://innovaa-13.onrender.com/index.html"
-    },
+        back_urls: {
+          success: "https://innovaa-13.onrender.com/index.html",
+          failure: "https://innovaa-13.onrender.com/index.html",
+          pending: "https://innovaa-13.onrender.com/index.html"
+        },
 
-    notification_url:
-      "https://innovaa-13.onrender.com/api/webhook-mercadopago",
+        notification_url:
+          "https://innovaa-13.onrender.com/api/webhook-mercadopago",
 
-    auto_return: "approved"
-  }
-});
+        auto_return: "approved"
+      }
+    });
 
     res.json({ init_point: result.init_point });
 
@@ -289,6 +290,7 @@ app.post("/api/crear-preferencia", async (req, res) => {
     res.status(500).json({ error: "Error Mercado Pago" });
   }
 });
+
 
 
 //------------------------------------------------------
@@ -308,7 +310,9 @@ app.post("/api/webhook-mercadopago", async (req, res) => {
     const total = pago.transaction_amount;
     // 🔥 Leer productos desde metadata
     const productos = pago.metadata?.productos || [];
+    const cliente = pago.metadata?.cliente || {};
 
+    const fecha = new Date().toLocaleString("es-MX");
 
     // 3️⃣ Crear HTML con productos
     let listaProductos = "";
@@ -324,13 +328,36 @@ productos.forEach(p => {
 });
 
     const htmlContent = `
-      <h2>🛒 Detalle de tu compra</h2>
-      <ul>
-        ${listaProductos}
-      </ul>
-      <p><strong>Total pagado:</strong> $${total} MXN</p>
-      <p>Gracias por tu compra 💙</p>
-    `;
+<h2>🧾 Detalle de tu compra</h2>
+
+<h3>Información del cliente</h3>
+<p><strong>Nombre:</strong> ${cliente.nombre || ""}</p>
+<p><strong>Correo:</strong> ${cliente.correo || correoCliente}</p>
+<p><strong>Teléfono:</strong> ${cliente.telefono || ""}</p>
+
+<h3>Dirección de entrega</h3>
+<p>
+${cliente.direccion || ""}<br>
+${cliente.ciudad || ""}<br>
+CP: ${cliente.cp || ""}<br>
+${cliente.estado || ""}
+</p>
+
+<p><strong>¿Requiere envío?</strong> ${cliente.envio}</p>
+<p><strong>¿Requiere factura?</strong> ${cliente.factura}</p>
+<p><strong>Notas:</strong> ${cliente.notas || "Ninguna"}</p>
+
+<h3>Productos</h3>
+<ul>
+${listaProductos}
+</ul>
+
+<p><strong>Total pagado:</strong> $${total} MXN</p>
+<p><strong>Fecha:</strong> ${fecha}</p>
+
+<p>Gracias por tu compra 💙</p>
+`;
+
 
     // 4️⃣ Enviar correo al CLIENTE
     await fetch("https://api.brevo.com/v3/smtp/email", {
@@ -345,7 +372,7 @@ productos.forEach(p => {
           name: "INNOVA"
         },
         to: [{ email: correoCliente }],
-        subject: "🧾 Confirmación de compra - INNOVA",
+        subject: "Confirmación de compra - INNOVA",
         htmlContent
       })
     });
@@ -360,7 +387,7 @@ productos.forEach(p => {
       body: JSON.stringify({
         sender: {
           email: process.env.FROM_EMAIL,
-          name: "Sistema INNOVA"
+          name: "Venta INNOVA"
         },
         to: [{ email: process.env.EMAIL_SEND_TO }],
         subject: "💰 Nueva venta realizada",
@@ -392,8 +419,4 @@ app.get((req, res) => {
 app.listen(PORT, () => {
   console.log(`🚀 Servidor corriendo en puerto ${PORT}`);
 });
-
-
-
-
 

@@ -108,13 +108,27 @@ document.addEventListener("DOMContentLoaded", () => {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
-            cliente: { correo },
-            items: carrito.map(it => ({
-            nombre: it.producto_nombre,
-            cantidad: it.cantidad,
-            precio: Number(it.precio) // 🔥 FIX
-        }))
-          })
+  cliente: {
+    correo: correo,
+    nombre: document.getElementById("nombre").value,
+    telefono: document.getElementById("telefono").value,
+    direccion: document.getElementById("direccion")?.value || "",
+    ciudad: document.getElementById("ciudad")?.value || "",
+    cp: document.getElementById("cp")?.value || "",
+    estado: document.getElementById("estado")?.value || "",
+    envio: document.getElementById("solicita-envio").value,
+    factura: document.getElementById("factura").value,
+    notas: document.getElementById("notas").value
+  },
+
+  items: carrito.map(it => ({
+    nombre: it.producto_nombre,
+    cantidad: it.cantidad,
+    precio: Number(it.precio),
+    presentacion_id: it.presentacion_id
+  }))
+})
+
         });
 
         const data = await res.json();
