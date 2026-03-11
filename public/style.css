@@ -10,7 +10,7 @@ body {
   background-color: #fff;
   color: #333;
   line-height: 1.6;
-  padding-top: 110px; /* espacio para header fijo */
+  padding-top: 90px; /* espacio para header fijo */
 }
 
 /* Header fijo */
@@ -33,6 +33,13 @@ header img {
   height: auto;
   border-radius: 20%;
 }
+
+.banner{
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
 
 nav {
   display: flex;
