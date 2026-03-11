@@ -254,7 +254,14 @@ app.post("/api/crear-preferencia", async (req, res) => {
 
     const { items, cliente } = req.body;
 
-    const preference = new Preference(mpClient);
+    const preference = {
+  items: itemsMercadoPago,
+
+  metadata: {
+    items: items,
+    cliente: cliente
+  }
+};
 
     const result = await preference.create({
       body: {
@@ -324,7 +331,15 @@ if (pagoExistente.rows.length > 0) {
     const productos = pago.metadata?.items || [];
     const cliente = pago.metadata?.cliente || {};
 
-    const fecha = new Date().toLocaleString("es-MX");
+    const fecha = new Date().toLocaleString("es-MX", {
+  timeZone: "America/Mexico_City",
+  year: "numeric",
+  month: "2-digit",
+  day: "2-digit",
+  hour: "2-digit",
+  minute: "2-digit"
+});
+
 
     // 3️⃣ Crear HTML con productos
 
@@ -383,6 +398,14 @@ ${cliente.estado || ""}
 <p><strong>¿Requiere envío?</strong> ${cliente.envio}</p>
 <p><strong>¿Requiere factura?</strong> ${cliente.factura}</p>
 <p><strong>Notas:</strong> ${cliente.notas || "Ninguna"}</p>
+
+<h3>Datos de facturación</h3>
+
+<p><strong>Nombre o Razón social:</strong> ${cliente.factura_nombre || "No proporcionado"}</p>
+<p><strong>RFC:</strong> ${cliente.factura_rfc || "No proporcionado"}</p>
+<p><strong>Dirección fiscal:</strong> ${cliente.factura_direccion || "No proporcionada"}</p>
+<p><strong>CP fiscal:</strong> ${cliente.factura_cp || "No proporcionado"}</p>
+
 
 <h3>Productos</h3>
 <ul>

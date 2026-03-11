@@ -111,17 +111,25 @@ document.addEventListener("DOMContentLoaded", () => {
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
   cliente: {
-    correo: correo,
-    nombre: document.getElementById("nombre").value,
-    telefono: document.getElementById("telefono").value,
-    direccion: document.getElementById("direccion")?.value || "",
-    ciudad: document.getElementById("ciudad")?.value || "",
-    cp: document.getElementById("cp")?.value || "",
-    estado: document.getElementById("estado")?.value || "",
-    envio: document.getElementById("solicita-envio").value,
-    factura: document.getElementById("factura").value,
-    notas: document.getElementById("notas").value
-  },
+correo: correo,
+nombre: document.getElementById("nombre").value,
+telefono: document.getElementById("telefono").value,
+
+direccion: document.getElementById("direccion")?.value || "",
+ciudad: document.getElementById("ciudad")?.value || "",
+cp: document.getElementById("cp")?.value || "",
+estado: document.getElementById("estado")?.value || "",
+
+envio: document.getElementById("solicita-envio").value,
+factura: document.getElementById("factura").value,
+
+factura_nombre: document.getElementById("factura_nombre")?.value || "",
+factura_rfc: document.getElementById("factura_rfc")?.value || "",
+factura_direccion: document.getElementById("factura_direccion")?.value || "",
+factura_cp: document.getElementById("factura_cp")?.value || "",
+
+notas: document.getElementById("notas").value
+},
 
   items: carrito.map(it => ({
     nombre: it.producto_nombre,
