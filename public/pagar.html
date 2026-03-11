@@ -27,116 +27,130 @@
     </nav>
 </header>
 
-<main class="checkout-container">
-  <!-- Formulario -->
-  <div class="checkout-card">
-    <h2>Contacto y entrega</h2>
+<!-- --------------------------------------------- -->
+<div class="checkout-card">
+<h2>Contacto y entrega</h2>
 
-    <div class="field">
-      <label for="correo">Correo electrónico</label>
-      <input id="correo" type="email" placeholder="correo@dominio.com" required>
-    </div>
-
-    <div class="field">
-      <label for="nombre">Nombre Completo</label>
-      <input id="nombre" type="text" placeholder="Nombre completo">
-    </div>
-
-    <div class="field">
-      <label for="telefono">Teléfono</label>
-      <input id="telefono" type="text" placeholder="Teléfono">
-    </div>
-
-    <div class="field">
-      <label for="telefono">Dirección</label>
-      <input id="direccion" type="text" placeholder="Dirección">
-    </div>
-
-    <div class="field">
-      <label for="telefono">Casa, apartamento, etc. (opcional)</label>
-      <input id="casa" type="text" placeholder="Casa, apartamento, etc.">
-    </div>
-
-    <div class="field">
-      <label for="telefono">Codigo Postal</label>
-      <input id="codigo" type="text" placeholder="CP">
-    </div>
-
-    <div class="field">
-      <label for="telefono">Delegación o Municipio</label>
-      <input id="delegacion" type="text" placeholder="Delegación o Municipio">
-    </div>
-
-    <div class="field">
-      <label for="telefono">Estado</label>
-      <input id="estado" type="text" placeholder="Estado">
-    </div>
-
-    <div class="field">
-  <label>Pago</label>
-
-  <label class="pago-opcion">
-    <input type="radio" name="metodo" value="mercadopago" checked>
-    <div class="pago-box">
-      <strong>Mercado Pago</strong>
-      <p>Después de hacer clic en "Pagar ahora", serás redirigido a Mercado Pago.</p>
-    </div>
-  </label>
-
-  <label class="pago-opcion">
-    <input type="radio" name="metodo" value="clip">
-    <div class="pago-box">
-      <strong>Clip</strong>
-      <p>Paga con crédito, débito o efectivo.</p>
-    </div>
-  </label>
+<div class="field">
+<label for="correo">Correo electrónico</label>
+<input id="correo" type="email" placeholder="correo@dominio.com" required>
 </div>
 
-
-
-    <div class="field">
-      <label for="solicita-envio">¿Requiere envío?</label>
-      <select id="solicita-envio">
-        <option value="no">No, pasaré por la sucursal</option>
-        <option value="si">Sí, enviar a domicilio</option>
-      </select>
-    </div>
-
-    <div id="datos-envio" style="display:none;">
-      <div class="field"><label for="direccion">Dirección de Envio</label><input id="direccion" type="text" placeholder="Calle, número, entre calles"></div>
-      <div class="field"><label for="ciudad">Delegación o Municipio</label><input id="ciudad" type="text" placeholder="Ciudad"></div>
-      <div class="field"><label for="cp">Código Postal</label><input id="cp" type="text" placeholder="CP"></div>
-      <div class="field"><label for="estado">Estado</label><input id="estado" type="text" placeholder="Estado"></div>
-    </div>
-
-    <div class="field">
-  <label>¿Requiere factura?</label>
-  <select id="factura">
-    <option value="no">No</option>
-    <option value="si">Sí</option>
-  </select>
-  <div id="datos-factura" style="display:none;">
-      <div class="field"><label for="nombre">Nombre</label><input id="direccion" type="text" placeholder="Calle, número, entre calles"></div>
-      <div class="field"><label for="apellidos">Apellidos</label><input id="ciudad" type="text" placeholder="Ciudad"></div>
-      <div class="field"><label for="direccion">Dirección fiscal</label><input id="cp" type="text" placeholder="CP"></div>
-      <div class="field"><label for="cp">CP</label><input id="estado" type="text" placeholder="Estado"></div>
-      <div class="field"><label for="ciudad">Ciudad</label><input id="estado" type="text" placeholder="Estado"></div>
-      <div class="field"><label for="estado">Estado</label><input id="estado" type="text" placeholder="Estado"></div>
-      <div class="field"><label for="telefono">Teléfono</label><input id="estado" type="text" placeholder="Estado"></div>
-    </div>
+<div class="field">
+<label for="nombre">Nombre Completo</label>
+<input id="nombre" type="text" placeholder="Nombre completo">
 </div>
 
-    <div class="field">
-      <label for="notas">Notas (opcional)</label>
-      <input id="notas" type="text" placeholder="Observaciones de entrega">
-    </div>
+<div class="field">
+<label for="telefono">Teléfono</label>
+<input id="telefono" type="text" placeholder="Teléfono">
+</div>
 
-    <button id="btn-pagar" class="btn-checkout">Pagar ahora</button>
+<div class="field">
+<label for="solicita-envio">¿Requiere envío?</label>
+<select id="solicita-envio">
+<option value="no">No, pasaré por la sucursal</option>
+<option value="si">Sí, enviar a domicilio</option>
+</select>
+</div>
 
+<!-- DATOS ENVIO -->
+<div id="datos-envio" style="display:none;">
 
-    <p class="small-muted" style="margin-top:10px;">* Si eliges Mercado Pago serás redirigido a una pasarela segura para procesar la tarjeta. Si eliges transferencia/depósito o contra entrega, la venta se registrará y luego coordinaremos la entrega.</p>
-    <div id="error-msg" style="color:#b00020;margin-top:10px;display:none;"></div>
-  </div>
+<div class="field">
+<label>Dirección</label>
+<input id="direccion" type="text" placeholder="Calle y número">
+</div>
+
+<div class="field">
+<label>Casa / Departamento (opcional)</label>
+<input id="casa" type="text" placeholder="Casa, apartamento, etc">
+</div>
+
+<div class="field">
+<label>Delegación o Municipio</label>
+<input id="ciudad" type="text" placeholder="Delegación o Municipio">
+</div>
+
+<div class="field">
+<label>Código Postal</label>
+<input id="cp" type="text" placeholder="CP">
+</div>
+
+<div class="field">
+<label>Estado</label>
+<input id="estado" type="text" placeholder="Estado">
+</div>
+
+</div>
+
+<!-- FACTURA -->
+<div class="field">
+<label>¿Requiere factura?</label>
+<select id="factura">
+<option value="no">No</option>
+<option value="si">Sí</option>
+</select>
+</div>
+
+<div id="datos-factura" style="display:none;">
+
+<div class="field">
+<label>Nombre o Razón Social</label>
+<input id="factura_nombre" type="text" placeholder="Nombre o empresa">
+</div>
+
+<div class="field">
+<label>RFC</label>
+<input id="factura_rfc" type="text" placeholder="RFC">
+</div>
+
+<div class="field">
+<label>Dirección fiscal</label>
+<input id="factura_direccion" type="text" placeholder="Dirección fiscal">
+</div>
+
+<div class="field">
+<label>CP fiscal</label>
+<input id="factura_cp" type="text" placeholder="CP">
+</div>
+
+</div>
+
+<div class="field">
+<label for="notas">Notas (opcional)</label>
+<input id="notas" type="text" placeholder="Observaciones de entrega">
+</div>
+
+<!-- PAGO -->
+<div class="field">
+<label>Pago</label>
+
+<label class="pago-opcion">
+<input type="radio" name="metodo" value="mercadopago" checked>
+<div class="pago-box">
+<strong>Mercado Pago</strong>
+<p>Serás redirigido a Mercado Pago.</p>
+</div>
+</label>
+
+<label class="pago-opcion">
+<input type="radio" name="metodo" value="clip">
+<div class="pago-box">
+<strong>Clip</strong>
+<p>Paga con crédito, débito o efectivo.</p>
+</div>
+</label>
+
+</div>
+
+<button id="btn-pagar" class="btn-checkout">Pagar ahora</button>
+
+<div id="error-msg" style="color:#b00020;margin-top:10px;display:none;"></div>
+
+</div>
+
+  <!-- ----------------------------------------------- -->
 
   <!-- Resumen -->
   <aside class="checkout-card">
@@ -179,8 +193,8 @@
         </p>
 
         <p><strong>Ventas:</strong><br>
-          56-10-13-87-75<br>
-          55-1233-5136, 55-3704-6332
+          55 8346 4685<br>
+          55 8892 8991, 55 2930 3117
         </p>
 
         <p><strong>Whatsapp:</strong> 56-10-13-87-75</p>

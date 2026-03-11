@@ -301,6 +301,18 @@ app.post("/api/webhook-mercadopago", async (req, res) => {
     const paymentId = req.body?.data?.id;
     if (!paymentId) return res.sendStatus(200);
 
+    // 🔒 Verificar si ya se procesó este pago
+const pagoExistente = await pool.query(
+  "SELECT payment_id FROM pagos_procesados WHERE payment_id = $1",
+  [paymentId]
+);
+
+if (pagoExistente.rows.length > 0) {
+  console.log("⚠️ Pago ya procesado:", paymentId);
+  return res.sendStatus(200);
+}
+
+
     // 1️⃣ Obtener pago
     const pago = await payment.get({ id: paymentId });
 
@@ -309,26 +321,51 @@ app.post("/api/webhook-mercadopago", async (req, res) => {
     const correoCliente = pago.payer.email;
     const total = pago.transaction_amount;
     // 🔥 Leer productos desde metadata
-    const productos = pago.metadata?.productos || [];
+    const productos = pago.metadata?.items || [];
     const cliente = pago.metadata?.cliente || {};
 
     const fecha = new Date().toLocaleString("es-MX");
 
     // 3️⃣ Crear HTML con productos
+
+// ----------------------------------------------
     let listaProductos = "";
 
-productos.forEach(p => {
+for (const p of productos) {
+
+  const query = `
+    SELECT
+      pr.volumen,
+      pr.imagen_principal,
+      prod.nombre
+    FROM presentaciones pr
+    INNER JOIN productos prod ON prod.id = pr.producto_id
+    WHERE pr.id = $1
+    LIMIT 1
+  `;
+
+  const result = await pool.query(query, [p.presentacion_id]);
+
+  const data = result.rows[0];
+
   listaProductos += `
-    <li>
-      ${p.nombre || p.producto_nombre} 
-      - Cantidad: ${p.cantidad}
-      - $${p.precio}
+    <li style="margin-bottom:20px;">
+      <strong>${data?.nombre || p.nombre}</strong><br>
+      Volumen: ${data?.volumen || ""}<br>
+      Cantidad: ${p.cantidad}<br>
+      Precio: $${p.precio}<br>
+      ${
+        data?.imagen_principal
+          ? `<img src="${data.imagen_principal}" width="120" style="margin-top:8px;">`
+          : ""
+      }
     </li>
   `;
-});
+}
+
 
     const htmlContent = `
-<h2>🧾 Detalle de tu compra</h2>
+<h2>Detalle de tu compra</h2>
 
 <h3>Información del cliente</h3>
 <p><strong>Nombre:</strong> ${cliente.nombre || ""}</p>
@@ -337,7 +374,7 @@ productos.forEach(p => {
 
 <h3>Dirección de entrega</h3>
 <p>
-${cliente.direccion || ""}<br>
+${cliente.direccion || "No especificada"}<br>
 ${cliente.ciudad || ""}<br>
 CP: ${cliente.cp || ""}<br>
 ${cliente.estado || ""}
@@ -355,7 +392,7 @@ ${listaProductos}
 <p><strong>Total pagado:</strong> $${total} MXN</p>
 <p><strong>Fecha:</strong> ${fecha}</p>
 
-<p>Gracias por tu compra 💙</p>
+<p>Gracias por tu compra</p>
 `;
 
 
@@ -398,6 +435,13 @@ ${listaProductos}
         `
       })
     });
+
+    // guardar pago procesado
+    await pool.query(
+      "INSERT INTO pagos_procesados (payment_id) VALUES ($1)",
+      [paymentId]
+    );
+
 
     res.sendStatus(200);
 
