@@ -254,46 +254,33 @@ app.post("/api/crear-preferencia", async (req, res) => {
 
     const { items, cliente } = req.body;
 
+    const itemsMercadoPago = items.map(item => ({
+      title: item.nombre,
+      quantity: Number(item.cantidad),
+      unit_price: Number(item.precio),
+      currency_id: "MXN"
+    }));
+
     const preference = {
   items: itemsMercadoPago,
 
   metadata: {
     items: items,
     cliente: cliente
-  }
+  }, 
+
+  notification_url: "https://innovaa-13.onrender.com/api/webhook-mercadopago"
 };
 
-    const result = await preference.create({
-      body: {
-        items: items.map(item => ({
-          title: item.nombre || item.producto_nombre || "Producto",
-          quantity: Number(item.cantidad || 1),
-          unit_price: Number(item.precio),
-          currency_id: "MXN"
-        })),
+    const response = await preferenceClient.create({ body: preference });
 
-        metadata: {
-          productos: items,
-          cliente: cliente
-        },
-
-        back_urls: {
-          success: "https://innovaa-13.onrender.com/index.html",
-          failure: "https://innovaa-13.onrender.com/index.html",
-          pending: "https://innovaa-13.onrender.com/index.html"
-        },
-
-        notification_url:
-          "https://innovaa-13.onrender.com/api/webhook-mercadopago",
-
-        auto_return: "approved"
-      }
+    res.json({
+      id: response.id,
+      init_point: response.init_point
     });
 
-    res.json({ init_point: result.init_point });
-
   } catch (error) {
-    console.error("❌ Error creando preferencia:", error);
+    console.error("Error creando preferencia:", error);
     res.status(500).json({ error: "Error Mercado Pago" });
   }
 });
