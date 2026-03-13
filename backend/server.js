@@ -20,6 +20,9 @@ const mpClient = new MercadoPagoConfig({
   accessToken: process.env.MP_ACCESS_TOKEN
 });
 const payment = new Payment(mpClient);
+
+const preferenceClient = new Preference(mpClient);
+
 //------------------------------------------------------
 
 const app = express();
@@ -259,6 +262,7 @@ app.post("/api/crear-preferencia", async (req, res) => {
       quantity: Number(item.cantidad),
       unit_price: Number(item.precio),
       currency_id: "MXN"
+      
     }));
 
     const preference = {
@@ -346,7 +350,9 @@ for (const p of productos) {
     LIMIT 1
   `;
 
-  const result = await pool.query(query, [p.presentacion_id]);
+  const presentacionId = p.presentacion_id || p.id;
+  const result = await pool.query(query, [presentacionId]);
+
 
   const data = result.rows[0];
 
@@ -358,7 +364,7 @@ for (const p of productos) {
       Precio: $${p.precio}<br>
       ${
         data?.imagen_principal
-          ? `<img src="${data.imagen_principal}" width="120" style="margin-top:8px;">`
+          ? `<img src="${data.imagen_principal}" style="max-width:120px;border-radius:6px;">`
           : ""
       }
     </li>
