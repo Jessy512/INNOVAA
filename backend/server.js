@@ -364,7 +364,7 @@ for (const p of productos) {
       Precio: $${p.precio}<br>
       ${
         data?.imagen_principal
-          ? `<img src="${data.imagen_principal}" style="max-width:120px;border-radius:6px;">`
+          ? `<img src="https://innovaa-13.onrender.com/${data.imagen_principal}" style="max-width:120px;border-radius:6px;">`
           : ""
       }
     </li>
