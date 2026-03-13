@@ -273,6 +273,14 @@ app.post("/api/crear-preferencia", async (req, res) => {
     cliente: cliente
   }, 
 
+  back_urls: {
+    success: "https://innovaa-13.onrender.com/index.html",
+    failure: "https://innovaa-13.onrender.com/index.html",
+    pending: "https://innovaa-13.onrender.com/index.html"
+  },
+
+  auto_return: "approved",
+
   notification_url: "https://innovaa-13.onrender.com/api/webhook-mercadopago"
 };
 
