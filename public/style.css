@@ -2253,3 +2253,88 @@ nav a.active {
     padding: 20px;
   }
 }
+
+
+/* ================= CARRITO LAYOUT ================= */
+.carrito-page {
+  max-width: 1200px;
+  margin: auto;
+  padding: 20px;
+}
+
+.carrito-contenedor {
+  display: grid;
+  grid-template-columns: 2fr 1fr; /* izquierda grande, derecha pequeña */
+  gap: 30px;
+  align-items: flex-start;
+}
+
+/* ================= LISTA DE PRODUCTOS ================= */
+.lista-items {
+  background: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0px 2px 8px rgba(0,0,0,0.1);
+}
+
+/* ================= RESUMEN ================= */
+.resumen-compra {
+  background: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0px 2px 8px rgba(0,0,0,0.1);
+  position: sticky;
+  top: 100px; /* para que se quede fijo al hacer scroll */
+}
+
+.resumen-compra h2 {
+  margin-bottom: 15px;
+}
+
+/* ================= BOTONES ================= */
+.resumen-acciones {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.btn {
+  padding: 12px;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+  border-radius: 6px;
+  text-align: center;
+}
+
+/* Manteniendo tu estilo oscuro */
+.btn-negro {
+  background-color: #0D1B2A;
+  color: #fff;
+  transition: 0.3s;
+}
+
+.btn-negro:hover {
+  background-color: #1B263B;
+}
+
+/* ================= RESPONSIVE ================= */
+@media (max-width: 768px) {
+  .carrito-contenedor {
+    grid-template-columns: 1fr;
+  }
+
+  .resumen-compra {
+    position: static;
+  }
+}
+
+.resumen-compra p {
+  margin: 10px 0;
+  font-size: 16px;
+}
+
+#subtotal-line {
+  font-weight: bold;
+}
