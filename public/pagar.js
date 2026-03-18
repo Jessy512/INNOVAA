@@ -66,8 +66,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const subtotal = calcularSubtotal();
   const envio = envioSelect.value === "si" ? ENVIO_COSTO : 0;
-  const total = subtotal;
-  //const total = subtotal + envio;
+  //const total = subtotal;
+  const total = subtotal + envio;
 
 
   subtotalLine.textContent = `Subtotal: ${moneda(subtotal)}`;
