@@ -2338,3 +2338,123 @@ nav a.active {
 #subtotal-line {
   font-weight: bold;
 }
+
+/* ================= CHECKOUT LAYOUT ================= */
+.checkout-container {
+  max-width: 1200px;
+  margin: auto;
+  padding: 20px;
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 30px;
+  align-items: flex-start;
+}
+
+/* ================= TARJETAS ================= */
+.checkout-card {
+  background: #fff;
+  padding: 25px;
+  border-radius: 10px;
+  box-shadow: 0px 2px 8px rgba(0,0,0,0.1);
+}
+
+/* ================= FORMULARIO ================= */
+.field {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 15px;
+}
+
+.field label {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.field input,
+.field select {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  outline: none;
+}
+
+.field input:focus,
+.field select:focus {
+  border-color: #0D1B2A;
+}
+
+/* ================= MÉTODOS DE PAGO ================= */
+.pago-opcion {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin-bottom: 10px;
+  cursor: pointer;
+}
+
+.pago-box {
+  border: 1px solid #ccc;
+  padding: 10px;
+  border-radius: 6px;
+  width: 100%;
+  transition: 0.3s;
+}
+
+.pago-opcion input:checked + .pago-box {
+  border-color: #0D1B2A;
+  background: #f5f7fa;
+}
+
+/* ================= BOTÓN ================= */
+.btn-checkout {
+  width: 100%;
+  padding: 14px;
+  margin-top: 15px;
+  background-color: #0D1B2A;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.btn-checkout:hover {
+  background-color: #1B263B;
+}
+
+/* ================= RESUMEN ================= */
+.subtotal-box {
+  margin-top: 15px;
+}
+
+.subtotal-box p {
+  margin: 8px 0;
+  font-size: 16px;
+}
+
+#total-line {
+  font-size: 18px;
+}
+
+/* 🔥 Hace que el resumen se quede fijo */
+.checkout-container aside {
+  position: sticky;
+  top: 100px;
+}
+
+/* ================= ITEMS ================= */
+#items-list {
+  margin-bottom: 15px;
+}
+
+/* ================= RESPONSIVE ================= */
+@media (max-width: 768px) {
+  .checkout-container {
+    grid-template-columns: 1fr;
+  }
+
+  .checkout-container aside {
+    position: static;
+  }
+}
