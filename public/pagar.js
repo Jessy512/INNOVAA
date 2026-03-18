@@ -93,67 +93,74 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   btnPagar.onclick = async () => {
-    errorMsg.style.display = "none";
+  errorMsg.style.display = "none";
 
-    const correo = document.getElementById("correo").value.trim();
-    const metodo = obtenerMetodoPago();
+  const correo = document.getElementById("correo").value.trim();
+  const metodo = obtenerMetodoPago();
 
-    if (!correo) {
-      errorMsg.textContent = "Correo requerido";
-      errorMsg.style.display = "block";
-      return;
-    }
+  if (!correo) {
+    errorMsg.textContent = "Correo requerido";
+    errorMsg.style.display = "block";
+    return;
+  }
 
-    if (metodo === "mercadopago") {
-      try {
-        const res = await fetch("/api/crear-preferencia", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-  cliente: {
-correo: correo,
-nombre: document.getElementById("nombre").value,
-telefono: document.getElementById("telefono").value,
-
-direccion: document.getElementById("direccion")?.value || "",
-ciudad: document.getElementById("ciudad")?.value || "",
-cp: document.getElementById("cp")?.value || "",
-estado: document.getElementById("estado")?.value || "",
-
-envio: document.getElementById("solicita-envio").value,
-factura: document.getElementById("factura").value,
-
-factura_nombre: document.getElementById("factura_nombre")?.value || "",
-factura_rfc: document.getElementById("factura_rfc")?.value || "",
-factura_direccion: document.getElementById("factura_direccion")?.value || "",
-factura_cp: document.getElementById("factura_cp")?.value || "",
-
-notas: document.getElementById("notas").value
-},
-
-  items: carrito.map(it => ({
+  // ✅ Crear items
+  let itemsFinal = carrito.map(it => ({
     nombre: it.producto_nombre,
     cantidad: it.cantidad,
     precio: Number(it.precio),
     presentacion_id: it.presentacion_id
-  }))
-})
+  }));
 
-        });
+  // ✅ Agregar envío
+  const envio = document.getElementById("solicita-envio").value === "si" ? 100 : 0;
 
-        const data = await res.json();
-        if (!res.ok) throw new Error(data.error);
+  if (envio > 0) {
+    itemsFinal.push({
+      nombre: "Costo de envío",
+      cantidad: 1,
+      precio: envio
+    });
+  }
 
-        window.location.href = data.init_point;
-      } catch (err) {
-        errorMsg.textContent = err.message || "Error en pago";
-        errorMsg.style.display = "block";
-      }
+  if (metodo === "mercadopago") {
+    try {
+      const res = await fetch("/api/crear-preferencia", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          cliente: {
+            correo: correo,
+            nombre: document.getElementById("nombre").value,
+            telefono: document.getElementById("telefono").value,
+            direccion: document.getElementById("direccion")?.value || "",
+            ciudad: document.getElementById("ciudad")?.value || "",
+            cp: document.getElementById("cp")?.value || "",
+            estado: document.getElementById("estado")?.value || "",
+            envio: document.getElementById("solicita-envio").value,
+            factura: document.getElementById("factura").value,
+            factura_nombre: document.getElementById("factura_nombre")?.value || "",
+            factura_rfc: document.getElementById("factura_rfc")?.value || "",
+            factura_direccion: document.getElementById("factura_direccion")?.value || "",
+            factura_cp: document.getElementById("factura_cp")?.value || "",
+            notas: document.getElementById("notas").value
+          },
+          items: itemsFinal
+        })
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) throw new Error(data.error);
+
+      window.location.href = data.init_point;
+
+    } catch (err) {
+      errorMsg.textContent = err.message || "Error en pago";
+      errorMsg.style.display = "block";
     }
-  };
+  }
+};
 
-  
-
-  /* INIT */
-  actualizarResumen();
-});
+/* INIT */ 
+actualizarResumen(); });
